@@ -1,0 +1,27 @@
+@Service 
+class PaymentService{
+    // payment will be join same Transaction TX1 , so we are using default Transactional - REQUIRED
+    @Transactional
+    public void proceedPayment(PaymentInfo info){
+        System.out.println("Processing payment in transaction: " + 
+                          TransactionSynchronizationManager.getCurrentTransactionName());
+        
+        if(info.getAmount > 1000){
+            // This will cause parent transaction to rollback
+            throw new PaymentException("Amount too high");
+        }
+         // Payment processing logic
+        chargeCustomer(paymentInfo);
+    }
+
+    private void chargeCustomer(PaymentInfo paymentInfo){
+        //save in DB or call other api
+    }
+}
+
+public class PaymentException extends RuntimeException{
+
+    public PaymentException(String message){
+        super(message)
+    }
+}

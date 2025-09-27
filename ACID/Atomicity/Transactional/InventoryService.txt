@@ -1,0 +1,26 @@
+@Service
+public class InventoryService{
+
+    // Nested Transaction - create a savePoint within parent transaction
+    @Transactional(Propagation -  Nested)
+    public void updateStock(List<OrderItem> items){
+        Systme.out.println("Update inventory in nested transaction)
+
+        for (OrderItem item : items) {
+            if (item.getQuantity() > getAvailableStock(item.getProductId())) {
+                // This rollback only affects the nested transaction
+                // Parent transaction can continue
+                throw new InsufficientStockException("Not enough stock for: " + item.getProductId());
+            }
+            reduceStock(item.getProductId(), item.getQuantity());
+        }
+    }
+
+     private int getAvailableStock(String productId) {
+        // Database query
+        return 100; // Mock value
+    }
+    
+    private void reduceStock(String productId, int quantity) {
+       
+}

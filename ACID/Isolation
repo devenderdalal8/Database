@@ -1,0 +1,10 @@
+# Notes - All commands uses terminal or bash
+
+1) Run a commands with docker to create a docker container and make a database with intial id and password
+
+    Commands:
+        Syntex :- 
+            docker run --name container_name -d -e POSTGRES_PASSWORD = password postgres:port 
+        e.g:-
+            docker run --name pgacid -d -e POSTGRES_PASSWORD = postgres postgres:13
+        

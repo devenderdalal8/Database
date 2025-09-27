@@ -1,0 +1,17 @@
+@RestController
+public class OrderController {
+    
+    @Autowired
+    private OrderService orderService;
+    
+    @PostMapping("/orders")
+    public ResponseEntity<String> createOrder(@RequestBody Order order) {
+        try {
+            orderService.processOrder(order);
+            return ResponseEntity.ok("Order processed successfully");
+        } catch (OrderProcessingException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                               .body("Order processing failed: " + e.getMessage());
+        }
+    }
+}

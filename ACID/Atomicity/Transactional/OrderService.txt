@@ -1,0 +1,43 @@
+
+@Service
+class OrderSrvice{
+    @Autowired
+    private InventoryService inventoryService;
+
+    @Autowired
+    private PaymentService paymentService;
+
+    @Autowired 
+    private NotificationService notificationService;
+
+
+    // Parent Transactional with default Required Propagation
+    @Transactional
+    public processOrder(Order order){
+        Logger.d("Start Order : " + order.name);
+        //save order in database
+        saveOrder(order);
+        try{
+            // nested call - Join existing Transactional - TX1
+            paymentService.proceedPayment(order);
+            
+            // Another nested call - also join TX1
+            inventoryService.updateStock(order);
+
+            // Send notification - this is new Transaction TX2
+            notificationService.sendConfirmation(order);
+        }catch(PaymentExcpetion ex){
+            throw new OrderProcessingException("payment Failed : "+ex);
+        }
+    }
+
+    private void saveOrder(Order order){
+        //save order in DB
+    }
+}
+
+class OrderProcessingException extends RuntimeException{
+    public OrderProcessingException(String message, Throwable cause){
+        super(message)
+    }
+}

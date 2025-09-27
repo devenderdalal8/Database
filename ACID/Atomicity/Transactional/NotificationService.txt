@@ -1,0 +1,24 @@
+@Service
+class NotificationService{
+    
+    //REQUIRES_NEW - it will create new transaction TX2
+    @Transactional(Propagation = REQUIRES_NEW)
+    public void sendConfirmation(String customerEmail){
+        System.out.println("Sending notification in NEW transaction: " + 
+                          TransactionSynchronizationManager.getCurrentTransactionName());
+        
+        // Even if parent transaction fails, this will be committed
+        logNotification(customerEmail, "Order confirmation sent");
+        sendEmail(customerEmail, "Your order has been processed");
+    }
+    
+    private void logNotification(String email, String message) {
+        // Database insert for audit trail
+    }
+    
+    private void sendEmail(String email, String message) {
+        // External email service call
+    }
+}
+
+
