@@ -1,0 +1,20 @@
+-- create a table of cities information
+
+-- CREATE TABLE cities(
+-- 	name varchar(100),
+-- 	country_ios_code varchar(10),
+-- 	population bigserial,
+--  	is_capital boolean,
+-- 	 PRIMARY KEY(name)
+-- );
+
+-- -- enter your data
+-- insert into cities (name, country_ios_code, population, is_capital) values
+-- ('New Delhi', 'IN', 10927986, true),
+-- ('Pune', 'IN', 3124458, false),
+-- ('Bangkok', 'TH', 5104476, true),
+-- ('Almaty', 'KZ', 1977011, false),
+-- ('Stockholm', 'SE', 1515017, true),
+-- ('Washington, D.C.', 'US', 689545, true);
+ 
+EXPLAIN ANALYZE SELECT * FROM  cities WHERE is_capital = true;
