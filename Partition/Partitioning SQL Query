@@ -8,14 +8,14 @@
 --   population         - Population of the city (auto-incremented bigserial).
 --   is_capital         - Boolean flag indicating if the city is a capital.
 CREATE TABLE cities(
-	name varchar(100),
-	country_ios_code varchar(10),
-	population bigserial,
- 	is_capital boolean,
-	 PRIMARY KEY(name)
+    name varchar(100),
+    country_ios_code varchar(10),
+    population bigserial,
+    is_capital boolean,
+     PRIMARY KEY(name)
 );
 
--- -- enter your data
+-- Insert sample data into the cities table
 insert into cities (name, country_ios_code, population, is_capital) values
 ('New Delhi', 'IN', 10927986, true),
 ('Pune', 'IN', 3124458, false),
@@ -27,9 +27,7 @@ insert into cities (name, country_ios_code, population, is_capital) values
 -- Analyze the query execution plan for retrieving all capital cities
 EXPLAIN ANALYZE SELECT * FROM cities WHERE is_capital = true;
 
--- create a partitioned table of buisness information
--- create table
-
+-- Create a partitioned table for business information (security prices)
 -- Creates the 'security_price' table to store price information for securities.
 -- Columns:
 --   id: Unique identifier for each price record (varchar).
@@ -38,14 +36,12 @@ EXPLAIN ANALYZE SELECT * FROM cities WHERE is_capital = true;
 --   business_date: Date for which the price is recorded (date).
 -- The table is partitioned by range on 'business_date' to optimize queries and storage for time-based data.
 CREATE TABLE security_price(
-	id varchar(255),
-	security_id varchar(255),
-	price numeric,
-	business_date date
+    id varchar(255),
+    security_id varchar(255),
+    price numeric,
+    business_date date
 ) PARTITION BY RANGE(business_date);
 
--- Create partition tables , in Postgres this has to the manually:
--- Range(inclusive , exclusive)
 -- Create partition tables for each month.
 -- In PostgreSQL, each partition must be created manually and must match the parent table's structure.
 -- The following partitions store data for March, April, and May 2025, based on the business_date column.
@@ -59,8 +55,7 @@ CREATE TABLE security_price_april_2025 PARTITION OF security_price FOR VALUES FR
 -- Partition for May 2025 (from May 1, 2025 to June 1, 2025, exclusive of June 1)
 CREATE TABLE security_price_may_2025 PARTITION OF security_price FOR VALUES FROM ('2025-05-01') TO ('2025-06-01');
 
-
--- Inserts sample price data for various securities into the 'security_price' table.
+-- Insert sample price data for various securities into the 'security_price' table.
 -- Each row contains:
 --   - id: Unique identifier for the price record
 --   - security_id: Ticker symbol of the security (e.g., 'IBM', 'MSFT')
@@ -77,15 +72,13 @@ insert into security_price (id, security_id, price, business_date) values
 ('7', 'AMD', 200, '2025-04-15'),
 ('8', 'AMD', 215, '2025-05-15');
 
-
--- This query retrieves all records from the 'security_price' table for a specific business date ('2025-04-01').
--- The EXPLAIN ANALYZE statement is used to display the execution plan and performance details for the same query,
--- which helps in understanding how the database engine processes the query and in identifying potential optimizations,
--- especially useful when working with partitioned tables or large datasets.
+-- Query to retrieve all records from the 'security_price' table for a specific business date ('2025-04-01').
 SELECT * FROM security_price WHERE business_date = '2025-04-01';
 
+-- Display the execution plan and performance details for the above query
 EXPLAIN ANALYZE SELECT * FROM security_price WHERE business_date = '2025-04-01';
 
+-- Show the size of the largest user tables in the database
 SELECT relname AS table, 
        pg_size_pretty(pg_relation_size(relid)) AS size
 FROM pg_catalog.pg_statio_user_tables
