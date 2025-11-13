@@ -1,0 +1,24 @@
+Test Your Application
+
+Run your Spring Boot application and use tools like Postman, Curl, or setup Swagger to test the endpoints:
+
+1. Add nodes:
+
+Method: POST
+URL: http://localhost:8080/hash-ring/node?identifier=Node4
+
+2. Get node for a key:
+
+Method: GET
+URL: http://localhost:8080/hash-ring/node?key=someKey
+
+3. Remove nodes:
+
+Method: DELETE
+URL: http://localhost:8080/hash-ring/node?identifier=Node4
+
+4. List nodes:
+
+Method: GET
+URL: http://localhost:8080/hash-ring/nodes
+
