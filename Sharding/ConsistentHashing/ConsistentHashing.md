@@ -2,7 +2,7 @@
 
 Consistent hashing is a popular technique in distributed systems to efficiently distribute keys or data elements across multiple nodes/servers. Its primary objective is to minimize the number of remapping operations when nodes are added or removed, enhancing system stability and reliability[web:60][web:62][web:65].
 
-- It helps share the burden among nodes and reduces the impact of node failures.
+- It helps share the burden among  nodes and reduces the impact of node failures.
 - When a new node is added, only a small subset of keys is remapped.
 - If a node fails, only its specific keys are reassigned, reducing overall system disruption.
 - Consistent hashing aids in data availability and consistency.
