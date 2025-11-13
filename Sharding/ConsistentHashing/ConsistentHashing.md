@@ -9,12 +9,12 @@ Consistent hashing is a popular technique used in distributed systems to address
 # Phases/Working of Consistent Hashing
 The following are the phases involved in the process of consistent hashing: 
 
-*Phase 1:* Hash Function Selection: Selecting the hash algorithm to link keys to network nodes is the first stage in consistent hashing. This hash function should be deterministic and produce a different value for each key. The selected hash function will be used to map keys to nodes in a consistent and predictable manner.
-*Phase 2:* Node Assignment: Based on the hash function's findings, nodes in the network are given keys in this phase. The nodes are organized in a circle, and the keys are given to the node that is situated closest to the key's hash value in a clockwise direction in the circle.
-*Phase 3:* Key Replication: It's critical to make sure that data is accessible in a distributed system even in the case of node failures. Keys can be copied across a number of network nodes to accomplish this. In the event that one node fails, this helps to guarantee that data is always accessible.
-*Phase 4:* Node Addition/Removal: It can be required to remap the keys to new nodes in order to maintain system balance when nodes are added to or deleted from the network. By only remapping just a small number of keys to the new node, consistent hashing minimizes the impact of added or deleted nodes.
-*Phase 5:* Load balancing: Consistent hashing helps in distributing the load among the network's nodes. To keep the system balanced and effective when a node is overloaded, portions of its keys can be remapped to other nodes.
-*Phase 6:* Failure Recovery: If a node fails, the keys that are assigned to it can be remapped to other nodes in the network. This enables data to remain accurate and always available, even in the case of a node failure.
+* Phase 1: Hash Function Selection: Selecting the hash algorithm to link keys to network nodes is the first stage in consistent hashing. This hash function should be deterministic and produce a different value for each key. The selected hash function will be used to map keys to nodes in a consistent and predictable manner.
+* Phase 2: Node Assignment: Based on the hash function's findings, nodes in the network are given keys in this phase. The nodes are organized in a circle, and the keys are given to the node that is situated closest to the key's hash value in a clockwise direction in the circle.
+* Phase 3: Key Replication: It's critical to make sure that data is accessible in a distributed system even in the case of node failures. Keys can be copied across a number of network nodes to accomplish this. In the event that one node fails, this helps to guarantee that data is always accessible.
+* Phase 4: Node Addition/Removal: It can be required to remap the keys to new nodes in order to maintain system balance when nodes are added to or deleted from the network. By only remapping just a small number of keys to the new node, consistent hashing minimizes the impact of added or deleted nodes.
+* Phase 5: Load balancing: Consistent hashing helps in distributing the load among the network's nodes. To keep the system balanced and effective when a node is overloaded, portions of its keys can be remapped to other nodes.
+* Phase 6: Failure Recovery: If a node fails, the keys that are assigned to it can be remapped to other nodes in the network. This enables data to remain accurate and always available, even in the case of a node failure.
 ![Example of Hashing](image.png)
 
 # Implementation of Consistent Hashing algorithm
