@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://primary-db:5432/app
+    username: app_user
+    password: secret
+
+replica:
+  datasource:
+    url: jdbc:postgresql://replica-db:5432/app
+    username: app_user
+    password: secret
