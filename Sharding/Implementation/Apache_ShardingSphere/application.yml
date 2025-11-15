@@ -1,0 +1,50 @@
+spring:
+  shardingsphere:
+    mode:
+      type: Standalone
+      repository:
+        type: JDBC
+    datasource:
+      names: ds0, ds1
+      ds0:
+        type: com.zaxxer.hikari.HikariDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        jdbcUrl: jdbc:mysql://localhost:3306/shard0
+        username: root
+        password: password
+        maxPoolSize: 10
+      ds1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        jdbcUrl: jdbc:mysql://localhost:3307/shard1
+        username: root
+        password: password
+        maxPoolSize: 10
+    rules:
+      sharding:
+        default-database-strategy:
+          standard:
+            sharding-column: customer_id
+            sharding-algorithm-name: database-inline
+        sharding-algorithms:
+          database-inline:
+            type: INLINE
+            props:
+              algorithm-expression: ds${customer_id % 2}
+        tables:
+          customers:
+            actual-data-nodes: ds${0..1}.customers
+          orders:
+            actual-data-nodes: ds${0..1}.orders
+            database-strategy:
+              standard:
+                sharding-column: customer_id
+                sharding-algorithm-name: database-inline
+            key-generate-strategy:
+              column: order_id
+              key-generator-name: snowflake
+        key-generators:
+          snowflake:
+            type: SNOWFLAKE
+    props:
+      sql-show: true # Log sharded SQL for debugging
